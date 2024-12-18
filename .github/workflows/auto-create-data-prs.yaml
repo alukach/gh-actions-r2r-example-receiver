@@ -1,0 +1,23 @@
+name: Create PRs for new datasets
+on:
+  push:
+    branches:
+      - dataset/*
+
+jobs:
+  create-prs:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --title "New Data File" \
+            --body "This PR was created automatically."
